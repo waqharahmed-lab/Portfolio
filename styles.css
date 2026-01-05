@@ -465,28 +465,7 @@ body {
   #nodeCursor {
     display: none;
   }
-}/* =======================
-   MOBILE SIDEBAR FIX
-======================= */
-@media (max-width: 900px) {
-
-  /* Pull social links up */
-  .social-links {
-    margin-top: 20px;   /* instead of auto */
-  }
-
-  /* Keep resume visible without pushing links down */
-  .resume-btn {
-    margin-top: 16px;
-  }
-
-  /* Allow sidebar to scroll if content exceeds height */
-  .sidebar {
-    overflow-y: auto;
-    padding-bottom: 30px;
-  }
-}
-
+}/* 
 
 
 
