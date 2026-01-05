@@ -1,180 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waqhar Ahmed | Junior Game Developer</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Waqhar Ahmed | Junior Game Developer</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
 
-<div class="layout">
+<body class="dark">
+
+  <!-- Background & Cursor -->
+  <canvas id="bgParticles"></canvas>
+  <canvas id="nodeCursor"></canvas>
+
+  <!-- Scroll Progress -->
+  <div id="scrollProgress"></div>
+
+  <div class="layout">
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
-        <div class="profile">
-            <div class="avatar">🎮</div>
-            <h1>Waqhar Ahmed</h1>
-            <p class="title">Junior Game Developer | Unity Developer</p>
-            <p class="bio">
-                Junior Game Developer with hands-on experience in Unity and C#,
-                passionate about building engaging mobile and 3D games.
-            </p>
-        </div>
+      <button id="menuToggle" class="menu-toggle">☰</button>
+      <button id="themeToggle" class="theme-toggle">🌙</button>
 
-        <nav class="sidebar-nav">
-            <a href="#home">HOME</a>
-            <a href="#about">ABOUT</a>
-            <a href="#experience">EXPERIENCE</a>
-            <a href="#education">EDUCATION</a>
-            <a href="#projects">PROJECTS</a>
-            <a href="#skills">SKILLS</a>
-            <a href="#contact">CONTACT</a>
-        </nav>
-
-        <div class="social-links">
-            <a href="mailto:waqharkhan786@gmail.com">📧 Email</a>
-            <a href="https://linkedin.com/in/waqhar-ahmed-2952b4228" target="_blank">💼 LinkedIn</a>
-            <a href="https://github.com/waqharahmed-lab" target="_blank">💻 GitHub</a>
+      <div class="profile">
+        <div class="avatar">
+          <img src="waqhar.jpg.jpeg" alt="Waqhar Ahmed" />
         </div>
+        <h1>Waqhar Ahmed</h1>
+        <p class="title">Junior Game Developer | Unity Developer</p>
+        <p class="bio">
+          Junior Game Developer with hands-on experience in Unity and C#,
+          passionate about building engaging mobile and 3D games.
+        </p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#home">HOME</a>
+        <a href="#about">ABOUT</a>
+        <a href="#experience">EXPERIENCE</a>
+        <a href="#education">EDUCATION</a>
+        <a href="#projects">PROJECTS</a>
+        <a href="#skills">SKILLS</a>
+        <a href="#contact">CONTACT</a>
+      </nav>
+
+      <div class="social-links">
+        <a href="mailto:waqharkhan786@gmail.com" class="side-link">📧 Email</a>
+        <a href="https://linkedin.com/in/waqhar-ahmed-2952b4228" target="_blank" class="side-link">💼 LinkedIn</a>
+        <a href="https://github.com/waqharahmed-lab" target="_blank" class="side-link">💻 GitHub</a>
+      </div>
+
+      <a href="Waqhar Ahmed_ (1).pdf" download class="resume-btn">
+        ⬇ Download Resume
+      </a>
     </aside>
 
     <!-- MAIN CONTENT -->
     <main class="main-content">
 
-        <!-- HOME -->
-        <section id="home" class="section">
-            <h2>Welcome</h2>
-            <p>
-                I am a Junior Game Developer specializing in Unity and C#. 
-                I enjoy creating gameplay mechanics, UI systems, and optimizing 
-                performance for mobile and 3D games.
-            </p>
-        </section>
+      <section id="home" class="section fade">
+        <h2>Welcome</h2>
+        <p>
+          I am a Junior Game Developer specializing in Unity and C#.
+          I enjoy creating gameplay mechanics, UI systems, and optimizing
+          performance for mobile and 3D games.
+        </p>
+      </section>
 
-        <!-- ABOUT -->
-        <section id="about" class="section">
-            <h2>About Me</h2>
-            <p>
-                To utilize my skills efficiently and grow with an organization that
-                provides opportunities to enhance my technical knowledge and
-                professional experience.
-            </p>
-            <ul>
-                <li><strong>Location:</strong> Raichur, India</li>
-                <li><strong>Email:</strong> waqharkhan786@gmail.com</li>
-                <li><strong>Phone:</strong> 7829811394</li>
-            </ul>
-        </section>
+      <section id="about" class="section fade">
+        <h2>About Me</h2>
+        <p>
+          To utilize my skills efficiently and grow with an organization that
+          provides opportunities to enhance my technical knowledge and
+          professional experience.
+        </p>
+        <ul>
+          <li><strong>Location:</strong> Raichur, India</li>
+          <li><strong>Email:</strong> waqharkhan786@gmail.com</li>
+          <li><strong>Phone:</strong> 7829811394</li>
+        </ul>
+      </section>
 
-        <!-- EXPERIENCE -->
-        <section id="experience" class="section">
-            <h2>Internship & Experience</h2>
+      <section id="experience" class="section fade">
+        <h2>Internship & Experience</h2>
 
-            <div class="card">
-                <h3>Junior Game Developer</h3>
-                <p>Indivillage Tech Solution (Super Huge Studios)</p>
-                <span>07/2025 – Present</span>
-            </div>
+        <div class="card">
+          <h3>Junior Game Developer</h3>
+          <p>Indivillage Tech Solution (Super Huge Studios)</p>
+          <span>07/2025 – Present</span>
+        </div>
 
-            <div class="card">
-                <h3>Data Processing Analyst</h3>
-                <p>Indivillage Tech Solution</p>
-                <span>10/2025 – Present</span>
-            </div>
+        <div class="card">
+          <h3>ServiceNow Developer / Admin</h3>
+          <p>Indivillage Tech Solution (Super Huge Studios)</p>
+          <span>03/2024 – 09/2024</span>
+        </div>
 
-            
+        <div class="card">
+          <h3>Software Developer Intern</h3>
+          <p>TechCity Software Consultant Pvt. Ltd. | Bengaluru</p>
+          <span>09/2021 – 10/2021</span>
+        </div>
 
-            <div class="card">
-                <h3>Software Developer Intern</h3>
-                <p>TechCity Software Consultant Pvt. Ltd. | Bengaluru</p>
-                <span>09/2021 – 10/2021</span>
-            </div>
+        <div class="card">
+          <h3>Data Analytics Intern (Virtual)</h3>
+          <p>KPMG</p>
+          <span>06/2023</span>
+        </div>
+      </section>
 
-            <div class="card">
-                <h3>Data Analytics Intern (Virtual)</h3>
-                <p>KPMG</p>
-                <span>06/2023</span>
-            </div>
-        </section>
+      <section id="education" class="section fade">
+        <h2>Education</h2>
 
-        <!-- EDUCATION -->
-        <section id="education" class="section">
-            <h2>Education</h2>
+        <div class="card">
+          <h3>B.E. Computer Science & Engineering</h3>
+          <p>HKE’S SLN College of Engineering, Raichur</p>
+          <span>2019 – 2022 | CGPA: 7.41</span>
+        </div>
 
-            <div class="card">
-                <h3>B.E. Computer Science & Engineering</h3>
-                <p>HKE’S SLN College of Engineering, Raichur</p>
-                <span>2019 – 2022 | CGPA: 7.41</span>
-            </div>
+        <div class="card">
+          <h3>Diploma in Computer Science & Engineering</h3>
+          <p>Government Polytechnic, Raichur</p>
+          <span>2016 – 2019 | 81.23%</span>
+        </div>
 
-            <div class="card">
-                <h3>Diploma in Computer Science & Engineering</h3>
-                <p>Government Polytechnic, Raichur</p>
-                <span>2016 – 2019 | 81.23%</span>
-            </div>
+        <div class="card">
+          <h3>SSLC</h3>
+          <p>The Little Angels High School, Raichur</p>
+          <span>2016</span>
+        </div>
+      </section>
 
-            <div class="card">
-                <h3>SSLC</h3>
-                <p>The Little Angels High School, Raichur</p>
-                <span>2016</span>
-            </div>
-        </section>
+      <section id="projects" class="section fade">
+        <h2>Projects</h2>
 
-        <!-- PROJECTS -->
-        <section id="projects" class="section">
-            <h2>Projects</h2>
+        <div class="card">
+          <h3>Zombie Shooter 3D (Unity)</h3>
+          <p>
+            Developed a 3D zombie shooter game using Unity and C#
+            with smooth player controls and core gameplay mechanics.
+          </p>
 
-            <div class="card">
-                <h3>Zombie Shooter 3D (Unity)</h3>
-                <p>
-                    Developed a 3D zombie shooter game using Unity and C# with
-                    smooth player controls and core gameplay mechanics.
-                </p>
-                <ul>
-                    <li>Zombie AI & shooting mechanics</li>
-                    <li>Real-time scoring system</li>
-                    <li>Unity physics, prefabs, UI & animations</li>
-                </ul>
-            </div>
+          <div class="video-wrapper">
+            <iframe
+              src="https://www.youtube.com/embed/ay_bd8wPho4"
+              title="Zombie Shooter Gameplay"
+              allowfullscreen>
+            </iframe>
+          </div>
 
-            <div class="card">
-                <h3>Code X – Android Application</h3>
-                <p>
-                    Android application to help beginners understand programming visually.
-                </p>
-                <ul>
-                    <li>Java & Android Studio</li>
-                    <li>Firebase backend</li>
-                </ul>
-            </div>
-        </section>
+          <ul>
+            <li>Zombie AI & shooting mechanics</li>
+            <li>Real-time scoring system</li>
+            <li>Unity physics, prefabs, UI & animations</li>
+          </ul>
+        </div>
 
-        <!-- SKILLS -->
-        <section id="skills" class="section">
-            <h2>Skills</h2>
+        <div class="card">
+          <h3>Code X – Android Application</h3>
+          <p>Android application to help beginners understand programming visually</p>
+          <p>It helps user to understand the code in a graphical way</p>
+<p> it is the best oportunity to Understand the code Build using the IDE Android studio and Java as programming
+language</p>
+<p>Firebase is used as the back-end for this application.</p>
+          <ul>
+            <li>Java & Android Studio</li>
+            <li>Firebase backend</li>
+          </ul>
+        </div>
+      </section>
 
-            <div class="skills-grid">
-                <span>C#</span>
-                <span>Unity</span>
-                <span>Java</span>
-                <span>SQL / MySQL</span>
-                <span>HTML</span>
-                <span>CSS</span>
-                <span>ServiceNow</span>
-                <span>Data Analytics</span>
-            </div>
-        </section>
+      <section id="skills" class="section fade">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+          <span>C#</span>
+          <span>Unity</span>
+          <span>Java</span>
+          <span>SQL / MySQL</span>
+          <span>HTML</span>
+          <span>CSS</span>
+          <span>ServiceNow</span>
+          <span>Data Analytics</span>
+        </div>
+      </section>
 
-        <!-- CONTACT -->
-        <section id="contact" class="section">
-            <h2>Contact</h2>
-            <p>📧 waqharkhan786@gmail.com</p>
-            <p>📞 7829811394</p>
-        </section>
+      <section id="contact" class="section fade">
+        <h2>Contact</h2>
+
+        <div class="contact-card">
+          <a href="mailto:waqharkhan786@gmail.com" class="contact-item">
+            📧 waqharkhan786@gmail.com
+          </a>
+          <a href="tel:7829811394" class="contact-item">
+            📞 7829811394
+          </a>
+        </div>
+      </section>
 
     </main>
-</div>
+  </div>
 
+  <script src="script.js"></script>
 </body>
 </html>
