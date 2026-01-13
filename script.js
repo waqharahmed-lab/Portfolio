@@ -1,211 +1,297 @@
-// ======================
-// THEME TOGGLE
-// ======================
-const toggleBtn = document.getElementById("themeToggle");
-const body = document.body;
+// ========================================
+// Theme Toggle
+// ========================================
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const html = document.documentElement;
 
-const savedTheme = localStorage.getItem("theme");
-if (savedTheme) {
-  body.className = savedTheme;
-  toggleBtn.textContent = savedTheme === "dark" ? "🌙" : "☀️";
+// Load saved theme
+const savedTheme = localStorage.getItem('theme') || 'dark';
+if (savedTheme === 'light') {
+    html.classList.add('light');
+    themeIcon.classList.remove('fa-moon');
+    themeIcon.classList.add('fa-sun');
 }
 
-toggleBtn.addEventListener("click", () => {
-  if (body.classList.contains("dark")) {
-    body.className = "light";
-    toggleBtn.textContent = "☀️";
-    localStorage.setItem("theme", "light");
-  } else {
-    body.className = "dark";
-    toggleBtn.textContent = "🌙";
-    localStorage.setItem("theme", "dark");
-  }
+themeToggle.addEventListener('click', () => {
+    const isLight = html.classList.toggle('light');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+
+    themeIcon.classList.toggle('fa-sun', isLight);
+    themeIcon.classList.toggle('fa-moon', !isLight);
 });
 
-// ======================
-// SMOOTH SCROLL
-// ======================
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener("click", e => {
-    e.preventDefault();
-    document.querySelector(link.getAttribute("href"))
-      .scrollIntoView({ behavior: "smooth" });
-  });
+// ========================================
+// Mobile Menu
+// ========================================
+const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+const menuIcon = document.getElementById('menuIcon');
+const sidebar = document.getElementById('sidebar');
+const mobileOverlay = document.getElementById('mobileOverlay');
+
+function closeMobileMenu() {
+    sidebar.classList.remove('active');
+    mobileOverlay.classList.remove('active');
+    menuIcon.classList.remove('fa-times');
+    menuIcon.classList.add('fa-bars');
+}
+
+function openMobileMenu() {
+    sidebar.classList.add('active');
+    mobileOverlay.classList.add('active');
+    menuIcon.classList.remove('fa-bars');
+    menuIcon.classList.add('fa-times');
+}
+
+mobileMenuToggle.addEventListener('click', () => {
+    sidebar.classList.contains('active') ? closeMobileMenu() : openMobileMenu();
 });
 
-// ======================
-// ACTIVE MENU
-// ======================
-const sections = document.querySelectorAll(".section");
-const navLinks = document.querySelectorAll(".sidebar-nav a");
+mobileOverlay.addEventListener('click', closeMobileMenu);
 
-window.addEventListener("scroll", () => {
-  let current = "";
-  sections.forEach(sec => {
-    if (window.scrollY >= sec.offsetTop - 150) {
-      current = sec.id;
+// ========================================
+// Smooth Scroll & Active Navigation
+// ========================================
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('section[id]');
+
+navLinks.forEach(link => {
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+            closeMobileMenu();
+        }
+    });
+});
+
+function updateActiveNav() {
+    let current = 'home';
+
+    sections.forEach(section => {
+        if (window.scrollY >= section.offsetTop - 160) {
+            current = section.id;
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.toggle(
+            'active',
+            link.getAttribute('data-section') === current
+        );
+    });
+}
+
+window.addEventListener('scroll', updateActiveNav);
+
+// ========================================
+// Scroll Progress Bar
+// ========================================
+const scrollProgress = document.getElementById('scrollProgress');
+
+function updateScrollProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    scrollProgress.style.width = (scrollTop / docHeight) * 100 + '%';
+}
+
+window.addEventListener('scroll', updateScrollProgress);
+
+// ========================================
+// Fade-in Animation
+// ========================================
+const fadeObserver = new IntersectionObserver(
+    entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    },
+    { threshold: 0.15 }
+);
+
+document.querySelectorAll('.fade-section').forEach(sec => {
+    fadeObserver.observe(sec);
+});
+
+// ========================================
+// Hero Buttons Smooth Scroll
+// ========================================
+document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
+    btn.addEventListener('click', e => {
+        const href = btn.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            e.preventDefault();
+            document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+});
+
+// ========================================
+// Particle Background (FIXED ALIGNMENT)
+// ========================================
+const particleCanvas = document.getElementById('particleCanvas');
+const particleCtx = particleCanvas.getContext('2d');
+
+let particles = [];
+const PARTICLE_COUNT = 80;
+let mouseX = -9999;
+let mouseY = -9999;
+
+function resizeParticleCanvas() {
+    particleCanvas.width = window.innerWidth;
+    particleCanvas.height = window.innerHeight;
+}
+
+function initParticles() {
+    particles = Array.from({ length: PARTICLE_COUNT }, () => ({
+        x: Math.random() * particleCanvas.width,
+        y: Math.random() * particleCanvas.height,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        size: Math.random() * 2 + 1
+    }));
+}
+
+function getParticleColors() {
+    return html.classList.contains('light')
+        ? { p: 'rgba(124,58,237,0.6)', l: 'rgba(124,58,237,' }
+        : { p: 'rgba(56,189,248,0.6)', l: 'rgba(56,189,248,' };
+}
+
+function animateParticles() {
+    particleCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+    const c = getParticleColors();
+
+    particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        const dx = mouseX - p.x;
+        const dy = mouseY - p.y;
+        const d = Math.hypot(dx, dy);
+
+        if (d < 180) {
+            p.x += dx * 0.002;
+            p.y += dy * 0.002;
+        }
+
+        if (p.x < 0) p.x = particleCanvas.width;
+        if (p.x > particleCanvas.width) p.x = 0;
+        if (p.y < 0) p.y = particleCanvas.height;
+        if (p.y > particleCanvas.height) p.y = 0;
+
+        particleCtx.beginPath();
+        particleCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        particleCtx.fillStyle = c.p;
+        particleCtx.fill();
+    });
+
+    for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.hypot(dx, dy);
+
+            if (dist < 100) {
+                particleCtx.strokeStyle = c.l + (0.15 * (1 - dist / 100)) + ')';
+                particleCtx.lineWidth = 0.5;
+                particleCtx.beginPath();
+                particleCtx.moveTo(particles[i].x, particles[i].y);
+                particleCtx.lineTo(particles[j].x, particles[j].y);
+                particleCtx.stroke();
+            }
+        }
     }
-  });
 
-  navLinks.forEach(link => {
-    link.classList.toggle(
-      "active",
-      link.getAttribute("href") === `#${current}`
-    );
-  });
-});
-
-// ======================
-// SCROLL PROGRESS
-// ======================
-window.addEventListener("scroll", () => {
-  const h = document.documentElement;
-  document.getElementById("scrollProgress").style.width =
-    (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100 + "%";
-});
-
-// ======================
-// FADE REVEAL
-// ======================
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("show");
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.15 });
-
-document.querySelectorAll(".fade").forEach(el => {
-  el.classList.add("hidden");
-  observer.observe(el);
-});
-
-// ======================
-// MOBILE MENU
-// ======================
-const menuToggle = document.getElementById("menuToggle");
-const sidebar = document.querySelector(".sidebar");
-
-menuToggle.addEventListener("click", () => {
-  sidebar.classList.toggle("open");
-});
-
-// ===============================
-// NODE CURSOR EFFECT
-// ===============================
-const cursorCanvas = document.getElementById("nodeCursor");
-const cursorCtx = cursorCanvas.getContext("2d");
-
-function resizeCursor() {
-  cursorCanvas.width = innerWidth;
-  cursorCanvas.height = innerHeight;
-}
-resizeCursor();
-addEventListener("resize", resizeCursor);
-
-const mouse = { x: innerWidth / 2, y: innerHeight / 2 };
-addEventListener("mousemove", e => {
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-});
-
-const cursorNodes = Array.from({ length: 10 }, () => ({
-  x: mouse.x,
-  y: mouse.y
-}));
-
-function animateCursor() {
-  cursorCtx.clearRect(0, 0, cursorCanvas.width, cursorCanvas.height);
-
-  cursorNodes[0].x += (mouse.x - cursorNodes[0].x) * 0.35;
-  cursorNodes[0].y += (mouse.y - cursorNodes[0].y) * 0.35;
-
-  for (let i = 1; i < cursorNodes.length; i++) {
-    cursorNodes[i].x += (cursorNodes[i - 1].x - cursorNodes[i].x) * 0.25;
-    cursorNodes[i].y += (cursorNodes[i - 1].y - cursorNodes[i].y) * 0.25;
-  }
-
-  cursorCtx.strokeStyle = "rgba(56,189,248,0.6)";
-  cursorCtx.lineWidth = 1.2;
-  cursorCtx.beginPath();
-  cursorNodes.forEach((n, i) => {
-    if (i === 0) cursorCtx.moveTo(n.x, n.y);
-    else cursorCtx.lineTo(n.x, n.y);
-  });
-  cursorCtx.stroke();
-
-  cursorNodes.forEach((n, i) => {
-    cursorCtx.beginPath();
-    cursorCtx.arc(n.x, n.y, i === 0 ? 4 : 2.5, 0, Math.PI * 2);
-    cursorCtx.fillStyle = "#38bdf8";
-    cursorCtx.fill();
-  });
-
-  requestAnimationFrame(animateCursor);
-}
-animateCursor();
-
-
-const bgCanvas = document.getElementById("bgParticles");
-const bgCtx = bgCanvas.getContext("2d");
-
-function resizeBg() {
-  bgCanvas.width = innerWidth;
-  bgCanvas.height = innerHeight;
-}
-resizeBg();
-addEventListener("resize", resizeBg);
-
-const bgMouse = { x: innerWidth / 2, y: innerHeight / 2 };
-addEventListener("mousemove", e => {
-  bgMouse.x = e.clientX;
-  bgMouse.y = e.clientY;
-});
-
-const particles = [];
-const COUNT = 80;
-
-for (let i = 0; i < COUNT; i++) {
-  particles.push({
-    x: Math.random() * bgCanvas.width,
-    y: Math.random() * bgCanvas.height,
-    vx: (Math.random() - 0.5) * 0.4,
-    vy: (Math.random() - 0.5) * 0.4,
-    size: Math.random() * 2 + 1
-  });
+    requestAnimationFrame(animateParticles);
 }
 
-function animateBg() {
-  bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+resizeParticleCanvas();
+initParticles();
+animateParticles();
 
-  for (let p of particles) {
-    // base movement
-    p.x += p.vx;
-    p.y += p.vy;
+window.addEventListener('resize', () => {
+    resizeParticleCanvas();
+    initParticles();
+});
 
-    // cursor attraction
-    const dx = bgMouse.x - p.x;
-    const dy = bgMouse.y - p.y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
+window.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
 
-    if (dist < 200) {
-      p.x += dx * 0.002;
-      p.y += dy * 0.002;
+// ========================================
+// Node Cursor Effect (Desktop Only)
+// ========================================
+const nodeCursorCanvas = document.getElementById('nodeCursor');
+const nodeCursorCtx = nodeCursorCanvas.getContext('2d');
+
+let nodes = [];
+const NODE_COUNT = 10;
+let cursorX = window.innerWidth / 2;
+let cursorY = window.innerHeight / 2;
+
+function isTouchDevice() {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+}
+
+function resizeNodeCanvas() {
+    nodeCursorCanvas.width = window.innerWidth;
+    nodeCursorCanvas.height = window.innerHeight;
+}
+
+function initNodes() {
+    nodes = Array.from({ length: NODE_COUNT }, () => ({
+        x: cursorX,
+        y: cursorY
+    }));
+}
+
+function getCursorColors() {
+    return html.classList.contains('light')
+        ? { s: 'rgba(124,58,237,0.6)', f: '#7c3aed' }
+        : { s: 'rgba(56,189,248,0.6)', f: '#38bdf8' };
+}
+
+function animateNodeCursor() {
+    if (isTouchDevice()) return;
+
+    nodeCursorCtx.clearRect(0, 0, nodeCursorCanvas.width, nodeCursorCanvas.height);
+    const c = getCursorColors();
+
+    nodes[0].x += (cursorX - nodes[0].x) * 0.35;
+    nodes[0].y += (cursorY - nodes[0].y) * 0.35;
+
+    for (let i = 1; i < nodes.length; i++) {
+        nodes[i].x += (nodes[i - 1].x - nodes[i].x) * 0.25;
+        nodes[i].y += (nodes[i - 1].y - nodes[i].y) * 0.25;
     }
 
-    // wrap
-    if (p.x < 0) p.x = bgCanvas.width;
-    if (p.x > bgCanvas.width) p.x = 0;
-    if (p.y < 0) p.y = bgCanvas.height;
-    if (p.y > bgCanvas.height) p.y = 0;
+    nodeCursorCtx.strokeStyle = c.s;
+    nodeCursorCtx.lineWidth = 1.2;
+    nodeCursorCtx.beginPath();
+    nodes.forEach((n, i) => (i ? nodeCursorCtx.lineTo(n.x, n.y) : nodeCursorCtx.moveTo(n.x, n.y)));
+    nodeCursorCtx.stroke();
 
-    bgCtx.beginPath();
-    bgCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    bgCtx.fillStyle = "rgba(56,189,248,0.6)";
-    bgCtx.fill();
-  }
+    nodes.forEach((n, i) => {
+        nodeCursorCtx.beginPath();
+        nodeCursorCtx.arc(n.x, n.y, i === 0 ? 4 : 2.5, 0, Math.PI * 2);
+        nodeCursorCtx.fillStyle = c.f;
+        nodeCursorCtx.fill();
+    });
 
-  requestAnimationFrame(animateBg);
+    requestAnimationFrame(animateNodeCursor);
 }
-animateBg();
+
+if (!isTouchDevice()) {
+    resizeNodeCanvas();
+    initNodes();
+    animateNodeCursor();
+
+    window.addEventListener('resize', resizeNodeCanvas);
+    window.addEventListener('mousemove', e => {
+        cursorX = e.clientX;
+        cursorY = e.clientY;
+    });
+}
